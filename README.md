@@ -6,6 +6,13 @@
 
 Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as naves inimigas são representadas por caracteres 'M' também. Prepare-se para desviar de ataques e eliminar os invasores!
 
+## Estrutura do Projeto
+
+- **src/**: Código fonte dividido em módulos.
+- **assets/**: Armazenamento de pontuações e recursos futuros.
+- **include/**: Arquivos de cabeçalho.
+- **tests/**: Testes unitários (planejados).
+
 ## Como Jogar
 
 1. **Inicie o jogo**: Execute o programa compilado.
