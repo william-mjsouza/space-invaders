@@ -1,0 +1,32 @@
+# Arquivos binários e de build
+*.o
+*.out
+*.exe
+*.a
+*.so
+*.dll
+space_invaders  # Nome do executável do projeto
+
+# Diretórios de build
+/build/
+/bin/
+/obj/
+
+# Arquivos da biblioteca CLI-lib
+/cli-lib/*.o
+/cli-lib/*.a
+
+# Arquivos temporários do editor (Ex: Visual Studio Code, Vim)
+*.swp
+*.swo
+*~
+*.log
+*.tmp
+
+# Arquivos do Visual Studio Code
+.vscode/
+.history/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
