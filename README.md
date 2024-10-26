@@ -22,11 +22,11 @@ Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as
 - `D` ou `→`: Mover para a direita
 - `Espaço`: Atirar
 
-## 📋 Instruções de Compilação e Uso
+## 📋 Instruções de Clonagem, Compilação e Uso
 
 ### Pré-requisitos
 
-Certifique-se de ter o **GCC** instalado em seu sistema, pois o jogo funciona apenas em sistemas Linux e MacOS. Você pode instalá-lo usando os seguintes comandos:
+O jogo funciona apenas em sistemas Linux e MacOS e requer o **GCC** para compilação. Instale o GCC usando os seguintes comandos:
 
 - **Linux (Ubuntu, etc)**:
 ```bash
@@ -37,6 +37,14 @@ sudo apt-get install build-essential
 - **MacOS**:
 ```bash
 xcode-select --install
+```
+
+### 📥 Clonar o Repositório
+Para começar, clone o repositório do jogo em sua máquina local usando o seguinte comando:
+
+```bash
+git clone https://github.com/usuario/space-invaders.git
+cd space-invaders
 ```
 
 ### Compilação e Execução
