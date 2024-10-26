@@ -27,3 +27,21 @@ Certifique-se de ter o GCC instalado em seu sistema. Você pode instalá-lo usan
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential
+```
+
+### Compilação
+
+Para compilar o jogo, execute o seguinte comando no diretório do seu projeto:
+
+```bash
+gcc main.c ./cli-lib/src/*.c -I./cli-lib/include -o space-invaders
+```
+
+
+### Execução
+
+Após a compilação bem-sucedida, execute o jogo com o comando:
+
+```bash
+./space-invaders
+```
