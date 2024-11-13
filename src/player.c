@@ -1,4 +1,3 @@
-// player.c
 #include <stdio.h>
 #include "player.h"
 #include "screen.h"
@@ -20,7 +19,7 @@ void updatePlayer(Player *player) {
 
 void drawPlayer(const Player *player) {
     screenGotoxy(player->x, player->y);
-    printf("A"); // Representação do jogador
+    printf("\033[35mM\033[0m"); // M roxo para o jogador
 }
 
 void initBullet(Bullet *bullet) {
@@ -31,7 +30,7 @@ void initBullet(Bullet *bullet) {
 
 void updateBullet(Bullet *bullet) {
     if (bullet->active) {
-        bullet->y -= 1;
+        bullet->y -= 2; // Velocidade dobrada para a bala
         if (bullet->y < 0) bullet->active = 0;
     }
 }
@@ -39,6 +38,6 @@ void updateBullet(Bullet *bullet) {
 void drawBullet(const Bullet *bullet) {
     if (bullet->active) {
         screenGotoxy(bullet->x, bullet->y);
-        printf("^");
+        printf("\033[34m^\033[0m"); // Bala azul
     }
 }

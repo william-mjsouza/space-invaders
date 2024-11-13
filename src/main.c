@@ -1,4 +1,3 @@
-// main.c
 #include <stdio.h>
 #include <stdlib.h>
 #include "screen.h"
@@ -26,8 +25,8 @@ int main() {
         if (keyhit()) {
             char key = readch();
             if (key == 'q') break;
-            if (key == 'a') player.speedX = -1;
-            if (key == 'd') player.speedX = 1;
+            if (key == 'a') player.speedX = -2; // Movimento mais rápido do jogador
+            if (key == 'd') player.speedX = 2;  // Movimento mais rápido do jogador
             if (key == ' ') {
                 if (!bullet.active) {
                     bullet.x = player.x;
