@@ -19,25 +19,31 @@ void updatePlayer(Player *player) {
 
 void drawPlayer(const Player *player) {
     screenGotoxy(player->x, player->y);
-    printf("\033[35mM\033[0m"); // M roxo para o jogador
+    printf("\033[35mM\033[0m");  // Representação do jogador em roxo
 }
 
-void initBullet(Bullet *bullet) {
-    bullet->x = 0;
-    bullet->y = 0;
-    bullet->active = 0;
-}
-
-void updateBullet(Bullet *bullet) {
-    if (bullet->active) {
-        bullet->y -= 2; // Velocidade dobrada para a bala
-        if (bullet->y < 0) bullet->active = 0;
+void initBullets(Bullet bullets[], int count) {
+    for (int i = 0; i < count; i++) {
+        bullets[i].x = 0;
+        bullets[i].y = 0;
+        bullets[i].active = 0;
     }
 }
 
-void drawBullet(const Bullet *bullet) {
-    if (bullet->active) {
-        screenGotoxy(bullet->x, bullet->y);
-        printf("\033[34m^\033[0m"); // Bala azul
+void updateBullets(Bullet bullets[], int count) {
+    for (int i = 0; i < count; i++) {
+        if (bullets[i].active) {
+            bullets[i].y -= 2; // Atualiza a posição da bala para se mover duas vezes mais rápido
+            if (bullets[i].y < 0) bullets[i].active = 0; // Desativa a bala se sair da tela
+        }
+    }
+}
+
+void drawBullets(const Bullet bullets[], int count) {
+    for (int i = 0; i < count; i++) {
+        if (bullets[i].active) {
+            screenGotoxy(bullets[i].x, bullets[i].y);
+            printf("\033[34m^\033[0m");  // Bala representada na cor azul
+        }
     }
 }

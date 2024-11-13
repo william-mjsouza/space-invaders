@@ -1,6 +1,7 @@
-// player.h
 #ifndef PLAYER_H
 #define PLAYER_H
+
+#define MAX_BULLETS 5  // Define o número máximo de balas
 
 typedef struct {
     int x, y;
@@ -15,8 +16,8 @@ typedef struct {
 void initPlayer(Player *player);
 void updatePlayer(Player *player);
 void drawPlayer(const Player *player);
-void initBullet(Bullet *bullet);
-void updateBullet(Bullet *bullet);
-void drawBullet(const Bullet *bullet);
+void initBullets(Bullet bullets[], int count);
+void updateBullets(Bullet bullets[], int count);
+void drawBullets(const Bullet bullets[], int count);
 
 #endif

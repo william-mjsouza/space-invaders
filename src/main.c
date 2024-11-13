@@ -18,31 +18,38 @@ int main() {
     EnemyFormation formation;
     initEnemyFormation(&formation);
 
-    Bullet bullet;
-    initBullet(&bullet);
+    Bullet bullets[MAX_BULLETS];
+    initBullets(bullets, MAX_BULLETS);
 
     while (1) {
         if (keyhit()) {
             char key = readch();
             if (key == 'q') break;
-            if (key == 'a') player.speedX = -2; // Movimento mais rápido do jogador
-            if (key == 'd') player.speedX = 2;  // Movimento mais rápido do jogador
+            if (key == 'a') player.speedX = -1;
+            if (key == 'd') player.speedX = 1;
             if (key == ' ') {
-                if (!bullet.active) {
-                    bullet.x = player.x;
-                    bullet.y = player.y - 1;
-                    bullet.active = 1;
+                // Procura uma bala inativa para disparar
+                for (int i = 0; i < MAX_BULLETS; i++) {
+                    if (!bullets[i].active) {
+                        bullets[i].x = player.x;
+                        bullets[i].y = player.y - 1;
+                        bullets[i].active = 1;
+                        break;
+                    }
                 }
             }
         }
 
         if (timerTimeOver()) {
             updatePlayer(&player);
-            updateBullet(&bullet);
+            updateBullets(bullets, MAX_BULLETS);
             updateEnemyFormation(&formation);
 
-            if (bullet.active && checkCollision(&bullet, &formation)) {
-                bullet.active = 0; // Desativa o tiro após a colisão
+            // Checa colisão para cada bala ativa
+            for (int i = 0; i < MAX_BULLETS; i++) {
+                if (bullets[i].active && checkCollision(&bullets[i], &formation)) {
+                    bullets[i].active = 0; // Desativa a bala após a colisão
+                }
             }
 
             if (checkGameOver(&formation)) {
@@ -52,7 +59,7 @@ int main() {
                 break;
             }
 
-            drawGame(&player, &formation, &bullet);
+            drawGame(&player, &formation, bullets);
         }
     }
 

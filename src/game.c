@@ -1,19 +1,18 @@
-// game.c
 #include "game.h"
 #include "screen.h"
 #include "player.h"
 #include "enemy.h"
 
-void drawGame(const Player *player, const EnemyFormation *formation, const Bullet *bullet) {
+void drawGame(const Player *player, const EnemyFormation *formation, const Bullet bullets[]) {
     screenClear();
     screenDrawBorders();
     drawPlayer(player);
     drawEnemyFormation(formation);
-    drawBullet(bullet);
+    drawBullets(bullets, MAX_BULLETS);
     screenHomeCursor();
 }
 
-int checkCollision(const Bullet *bullet, EnemyFormation *formation) {
+int checkCollision(const Bullet *bullet, EnemyFormation *formation) {  // Torna bullet constante
     for (int row = 0; row < ENEMY_ROWS; row++) {
         for (int col = 0; col < ENEMY_COLS; col++) {
             if (formation->alive[row][col] && bullet->x == formation->x + col && bullet->y == formation->y + row) {
