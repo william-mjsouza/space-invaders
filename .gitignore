@@ -78,6 +78,7 @@ space_invaders  # Nome do executável do projeto
 *.tmp
 
 # Arquivos do Visual Studio Code
+.vscode
 .history/
 
 # Arquivos de sistema
