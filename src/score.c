@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "score.h"
 #include "screen.h"
 
