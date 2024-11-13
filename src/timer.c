@@ -1,55 +1,30 @@
-/**
- * timer.c
- * Created on Aug, 23th 2023
- * Author: Tiago Barros
- * Based on "From C to C++ course - 2002"
-*/
-
+// timer.c
+#include <time.h>
+#include <unistd.h>
 #include "timer.h"
-#include <sys/time.h>
-#include <stdio.h>
 
-static struct timeval timer, now;
-static int delay = -1;
+static int interval_ms;
+static struct timespec last_time;
 
-void timerInit(int valueMilliSec)
-{
-    delay = valueMilliSec;
-    gettimeofday(&timer, NULL);
+void timerInit(int interval) {
+    interval_ms = interval;
+    clock_gettime(CLOCK_MONOTONIC, &last_time);
 }
 
-void timerDestroy()
-{
-    delay = -1;
-}
+int timerTimeOver() {
+    struct timespec current_time;
+    clock_gettime(CLOCK_MONOTONIC, &current_time);
 
-void timerUpdateTimer(int valueMilliSec)
-{
-    delay = valueMilliSec;
-    gettimeofday(&timer, NULL);
-}
+    long elapsed = (current_time.tv_sec - last_time.tv_sec) * 1000 +
+                   (current_time.tv_nsec - last_time.tv_nsec) / 1000000;
 
-int getTimeDiff()
-{
-    gettimeofday(&now, NULL);
-    long diff = (((now.tv_sec - timer.tv_sec) * 1000000) + now.tv_usec - timer.tv_usec)/1000;
-    return (int) diff;
-}
-
-int timerTimeOver()
-{
-    int ret = 0;
-
-    if (getTimeDiff() > delay)
-    {
-        ret = 1;
-        gettimeofday(&timer, NULL);
+    if (elapsed >= interval_ms) {
+        last_time = current_time;
+        return 1;
     }
-
-    return ret;
+    return 0;
 }
 
-void timerPrint()
-{
-    printf("Timer:  %d", getTimeDiff());
+void timerDestroy() {
+    // Não há nada específico para destruir no temporizador
 }

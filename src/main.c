@@ -1,3 +1,4 @@
+// main.c
 #include <stdio.h>
 #include <stdlib.h>
 #include "screen.h"
@@ -8,27 +9,54 @@
 #include "enemy.h"
 
 int main() {
-    screenInit(1);         // Inicializa a tela com bordas
-    keyboardInit();        // Inicializa o teclado
-    timerInit(100);        // Inicializa o timer com 100ms
+    screenInit(1);
+    keyboardInit();
+    timerInit(100);
 
-    // Desenha o estado inicial do jogo
-    initGame();            // Configura o jogo e inicializa o jogador e os inimigos
-    drawGame();            // Exibe o jogador e os inimigos na tela
+    Player player;
+    initPlayer(&player);
 
-    // Loop principal do jogo
+    EnemyFormation formation;
+    initEnemyFormation(&formation);
+
+    Bullet bullet;
+    initBullet(&bullet);
+
     while (1) {
-        if (keyhit()) {    // Verifica se uma tecla foi pressionada
+        if (keyhit()) {
             char key = readch();
-            if (key == 'q') break; // Sai do jogo com a tecla 'q'
+            if (key == 'q') break;
+            if (key == 'a') player.speedX = -1;
+            if (key == 'd') player.speedX = 1;
+            if (key == ' ') {
+                if (!bullet.active) {
+                    bullet.x = player.x;
+                    bullet.y = player.y - 1;
+                    bullet.active = 1;
+                }
+            }
         }
 
         if (timerTimeOver()) {
-            drawGame();    // Atualiza o desenho do jogo (atualmente estático)
+            updatePlayer(&player);
+            updateBullet(&bullet);
+            updateEnemyFormation(&formation);
+
+            if (bullet.active && checkCollision(&bullet, &formation)) {
+                bullet.active = 0; // Desativa o tiro após a colisão
+            }
+
+            if (checkGameOver(&formation)) {
+                screenClear();
+                screenGotoxy(MAXX / 2 - 5, MAXY / 2);
+                printf("GAME OVER");
+                break;
+            }
+
+            drawGame(&player, &formation, &bullet);
         }
     }
 
-    // Finaliza os recursos
     keyboardDestroy();
     timerDestroy();
     screenDestroy();

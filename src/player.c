@@ -1,19 +1,44 @@
+// player.c
+#include <stdio.h>
 #include "player.h"
 #include "screen.h"
 
-// Definindo a posição inicial do jogador
-#define PLAYER_INIT_X (MAXX / 2)
-#define PLAYER_INIT_Y (MAXY - 2)
-
-int playerX = PLAYER_INIT_X;
-int playerY = PLAYER_INIT_Y;
-
-void initPlayer() {
-    playerX = PLAYER_INIT_X;
-    playerY = PLAYER_INIT_Y;
+void initPlayer(Player *player) {
+    player->x = MAXX / 2;
+    player->y = MAXY - 2;
+    player->speedX = 0;
+    player->speedY = 0;
 }
 
-void drawPlayer() {
-    screenGotoxy(playerX, playerY);
-    printf("M"); // Caractere da nave do jogador
+void updatePlayer(Player *player) {
+    player->x += player->speedX;
+    player->y += player->speedY;
+
+    if (player->x < 1) player->x = 1;
+    if (player->x > MAXX - 2) player->x = MAXX - 2;
+}
+
+void drawPlayer(const Player *player) {
+    screenGotoxy(player->x, player->y);
+    printf("A"); // Representação do jogador
+}
+
+void initBullet(Bullet *bullet) {
+    bullet->x = 0;
+    bullet->y = 0;
+    bullet->active = 0;
+}
+
+void updateBullet(Bullet *bullet) {
+    if (bullet->active) {
+        bullet->y -= 1;
+        if (bullet->y < 0) bullet->active = 0;
+    }
+}
+
+void drawBullet(const Bullet *bullet) {
+    if (bullet->active) {
+        screenGotoxy(bullet->x, bullet->y);
+        printf("^");
+    }
 }

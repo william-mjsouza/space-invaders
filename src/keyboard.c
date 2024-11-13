@@ -1,68 +1,51 @@
-/**
- * keyboard.h
- * Created on Aug, 23th 2023
- * Author: Tiago Barros
- * Based on "From C to C++ course - 2002"
-*/
-
-#include <termios.h>
+// keyboard.c
+#include <stdio.h>
 #include <unistd.h>
-
+#include <termios.h>
+#include <fcntl.h>
 #include "keyboard.h"
 
-static struct termios initialSettings, newSettings;
-static int peekCharacter;
-
-
-void keyboardInit()
-{
-    tcgetattr(0,&initialSettings);
-    newSettings = initialSettings;
-    newSettings.c_lflag &= ~ICANON;
-    newSettings.c_lflag &= ~ECHO;
-    newSettings.c_lflag &= ~ISIG;
-    newSettings.c_cc[VMIN] = 1;
-    newSettings.c_cc[VTIME] = 0;
-    tcsetattr(0, TCSANOW, &newSettings);
+void keyboardInit() {
+    struct termios settings;
+    tcgetattr(0, &settings);
+    settings.c_lflag &= ~ICANON;
+    settings.c_lflag &= ~ECHO;
+    tcsetattr(0, TCSANOW, &settings);
 }
 
-void keyboardDestroy()
-{
-    tcsetattr(0, TCSANOW, &initialSettings);
+void keyboardDestroy() {
+    struct termios settings;
+    tcgetattr(0, &settings);
+    settings.c_lflag |= ICANON;
+    settings.c_lflag |= ECHO;
+    tcsetattr(0, TCSANOW, &settings);
 }
 
-int keyhit()
-{
-    unsigned char ch;
-    int nread;
+int keyhit() {
+    struct termios oldt, newt;
+    int ch;
+    int oldf;
 
-    if (peekCharacter != -1) return 1;
-    
-    newSettings.c_cc[VMIN]=0;
-    tcsetattr(0, TCSANOW, &newSettings);
-    nread = read(0,&ch,1);
-    newSettings.c_cc[VMIN]=1;
-    tcsetattr(0, TCSANOW, &newSettings);
-    
-    if(nread == 1) 
-    {
-        peekCharacter = ch;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
+
+    ch = getchar();
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    fcntl(STDIN_FILENO, F_SETFL, oldf);
+
+    if (ch != EOF) {
+        ungetc(ch, stdin);
         return 1;
     }
-    
+
     return 0;
 }
 
-int readch()
-{
-    char ch;
-
-    if(peekCharacter != -1)
-    {
-        ch = peekCharacter;
-        peekCharacter = -1;
-        return ch;
-    }
-    read(0,&ch,1);
-    return ch;
+char readch() {
+    return getchar();
 }
