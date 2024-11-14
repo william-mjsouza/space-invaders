@@ -10,7 +10,7 @@ void initPlayer(Player *player) {
 }
 
 void updatePlayer(Player *player) {
-    player->x += player->speedX;
+    player->x += player->speedX * 2; // Dobrar a velocidade horizontal
     player->y += player->speedY;
 
     if (player->x < 1) player->x = 1;
@@ -33,7 +33,7 @@ void initBullets(Bullet bullets[], int count) {
 void updateBullets(Bullet bullets[], int count) {
     for (int i = 0; i < count; i++) {
         if (bullets[i].active) {
-            bullets[i].y -= 2; // Atualiza a posição da bala para se mover duas vezes mais rápido
+            bullets[i].y -= 2; // Movimenta a bala duas posições para cima
             if (bullets[i].y < 0) bullets[i].active = 0; // Desativa a bala se sair da tela
         }
     }
