@@ -3,39 +3,40 @@
 #include "screen.h"
 
 void screenInit(int borders) {
-    screenClear();
     if (borders) screenDrawBorders();
 }
 
 void screenDestroy() {
-    screenClear();
+    system("clear");
 }
 
 void screenClear() {
-    printf("\033[2J\033[H");  // Limpa a tela e move o cursor para o início
+    system("clear");
 }
 
 void screenDrawBorders() {
-    for (int x = 0; x <= MAXX + 1; x++) {
+    printf("\033[35m"); // Código ANSI para roxo
+    for (int x = 0; x <= MAXX; x++) {
         screenGotoxy(x, 0);
         printf("═");
-        screenGotoxy(x, MAXY + 1);
+        screenGotoxy(x, MAXY);
         printf("═");
     }
-    for (int y = 0; y <= MAXY + 1; y++) {
+    for (int y = 0; y <= MAXY; y++) {
         screenGotoxy(0, y);
         printf("║");
-        screenGotoxy(MAXX + 1, y);
+        screenGotoxy(MAXX, y);
         printf("║");
     }
     screenGotoxy(0, 0);
     printf("╔");
-    screenGotoxy(MAXX + 1, 0);
+    screenGotoxy(MAXX, 0);
     printf("╗");
-    screenGotoxy(0, MAXY + 1);
+    screenGotoxy(0, MAXY);
     printf("╚");
-    screenGotoxy(MAXX + 1, MAXY + 1);
+    screenGotoxy(MAXX, MAXY);
     printf("╝");
+    printf("\033[0m"); // Restaura cor padrão
 }
 
 void screenGotoxy(int x, int y) {

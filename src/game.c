@@ -14,11 +14,20 @@ void drawGame(const Player *player, const EnemyFormation *formation, const Bulle
 
 // Função para verificar colisão entre balas e inimigos
 int checkCollision(const Bullet *bullet, EnemyFormation *formation) {
+    int bx = bullet->x;
+    int by = bullet->y;
+
     for (int row = 0; row < ENEMY_ROWS; row++) {
         for (int col = 0; col < ENEMY_COLS; col++) {
-            if (formation->alive[row][col] && bullet->x == formation->x + col && bullet->y == formation->y + row) {
-                formation->alive[row][col] = 0; // Marca o inimigo como destruído
-                return 1; // Colisão detectada
+            if (formation->alive[row][col]) {
+                int ex = formation->x + col;
+                int ey = formation->y + row;
+
+                // Define uma área de colisão em torno do inimigo
+                if (bx >= ex - 1 && bx <= ex + 1 && by >= ey - 1 && by <= ey + 1) {
+                    formation->alive[row][col] = 0; // Marca o inimigo como destruído
+                    return 1; // Colisão detectada
+                }
             }
         }
     }
