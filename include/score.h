@@ -5,7 +5,8 @@
 void initScore();
 void updateScore(int points);
 void drawScore();
-void showFinalScore();
-void saveScoreToFile(const char *name);
+// Removed showFinalScore() declaration
+void saveScoreToFile(const char *name, double elapsedTime);
+void sortScores();
 
 #endif
