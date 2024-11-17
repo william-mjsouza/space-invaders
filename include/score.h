@@ -5,7 +5,7 @@
 void initScore();
 void updateScore(int points);
 void drawScore();
-void showFinalScore();
+void showFinalScore(const char *name);
 void saveScoreToFile(const char *name);
 
 #endif

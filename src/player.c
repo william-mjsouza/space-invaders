@@ -1,3 +1,4 @@
+// player.c
 #include <stdio.h>
 #include "player.h"
 #include "screen.h"
@@ -15,6 +16,10 @@ void updatePlayer(Player *player) {
 
     if (player->x < 1) player->x = 1;
     if (player->x > MAXX - 2) player->x = MAXX - 2;
+
+    // Reseta a velocidade após atualização
+    player->speedX = 0;
+    player->speedY = 0;
 }
 
 void drawPlayer(const Player *player) {
