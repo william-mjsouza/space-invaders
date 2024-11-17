@@ -1,4 +1,4 @@
-// score.c
+// score.c 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,15 +20,11 @@ void drawScore() {
     printf("Score: %d", score);
 }
 
-void showFinalScore(const char *name) {
+void showFinalScore() {
     screenClear();
-    screenGotoxy(MAXX / 2 - 10, MAXY / 2);
-    printf("Parabéns, %s!", name);
-    screenGotoxy(MAXX / 2 - 10, MAXY / 2 + 1);
+    screenGotoxy(MAXX / 2 - 5, MAXY / 2);
     printf("Pontuação Final: %d", score);
-    screenGotoxy(MAXX / 2 - 10, MAXY / 2 + 3);
-    printf("Pressione qualquer tecla para sair...");
-    getchar(); // Espera o usuário pressionar Enter
+    screenGotoxy(MAXX / 2 - 5, MAXY / 2 + 2);
 }
 
 void saveScoreToFile(const char *name) {

@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "game.h"
 #include "screen.h"
-#include "score.h"
 
 // Função para desenhar o estado atual do jogo
 void drawGame(const Player *player, const EnemyFormation *formation, const Bullet bullets[]) {
@@ -11,7 +10,6 @@ void drawGame(const Player *player, const EnemyFormation *formation, const Bulle
     drawPlayer(player);
     drawEnemyFormation(formation);
     drawBullets(bullets, MAX_BULLETS);
-    drawScore(); // Exibe a pontuação atual
     screenHomeCursor();
 }
 
@@ -26,8 +24,8 @@ int checkCollision(const Bullet *bullet, EnemyFormation *formation) {
                 int ex = formation->x + col;
                 int ey = formation->y + row;
 
-                // Verifica colisão direta
-                if (bx == ex && by == ey) {
+                // Define uma área de colisão em torno do inimigo
+                if (bx >= ex - 1 && bx <= ex + 1 && by >= ey - 1 && by <= ey + 1) {
                     formation->alive[row][col] = 0; // Marca o inimigo como destruído
                     return 1; // Colisão detectada
                 }
@@ -53,7 +51,7 @@ int checkAllEnemiesDestroyed(const EnemyFormation *formation) {
 int checkGameOver(const EnemyFormation *formation) {
     for (int row = 0; row < ENEMY_ROWS; row++) {
         for (int col = 0; col < ENEMY_COLS; col++) {
-            if (formation->alive[row][col] && formation->y + row >= MAXY - 2) {
+            if (formation->alive[row][col] && formation->y + row >= MAXY - 1) {
                 return 1; // Game Over
             }
         }
