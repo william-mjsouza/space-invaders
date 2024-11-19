@@ -17,7 +17,7 @@ Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as
 3. **Atire nos inimigos**: Pressione a tecla designada para disparar projéteis (representados pelo caractere '^') em direção às naves inimigas.
 4. **Sobreviva**: Desvie dos ataques inimigos e tente derrotar o maior número possível de naves antes que elas alcancem a base!
 
-### Controles (a definir)
+### Controles
 - `A`: Mover para a esquerda
 - `D`: Mover para a direita
 - `Espaço`: Atirar
