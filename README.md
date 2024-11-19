@@ -1,6 +1,6 @@
-# 👾 Space Invaders ASCII em C
+# 👾 Tavola Space
 
-**Space Invaders ASCII em C** é uma recriação do clássico jogo arcade onde o jogador controla uma nave e deve defender a Terra de uma invasão alienígena, tudo em uma interface de texto com arte ASCII. Esta abordagem proporciona uma experiência nostálgica e diferenciada para os fãs de jogos retro.
+**Tavola Space** é uma recriação do clássico jogo arcade Space Invaders onde o jogador controla uma nave e deve defender a Terra de uma invasão alienígena, tudo em uma interface de texto com arte ASCII. Esta abordagem proporciona uma experiência nostálgica e diferenciada para os fãs de jogos retro.
 
 Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as naves inimigas também são representadas por caracteres 'M'. Prepare-se para desviar de ataques e eliminar os invasores!
 
