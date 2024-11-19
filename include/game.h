@@ -5,7 +5,7 @@
 #include "player.h"
 #include "enemy.h"
 
-// Declaração das funções checkGameOver e checkAllEnemiesDestroyed
+
 int checkAllEnemiesDestroyed(const EnemyFormation *formation);
 int checkGameOver(const EnemyFormation *formation);
 

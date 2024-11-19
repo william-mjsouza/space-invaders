@@ -26,5 +26,4 @@ int timerTimeOver() {
 }
 
 void timerDestroy() {
-    // Não há nada específico para destruir no temporizador
 }

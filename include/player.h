@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#define MAX_BULLETS 5  // Define o número máximo de balas
+#define MAX_BULLETS 5 
 
 typedef struct {
     int x, y;

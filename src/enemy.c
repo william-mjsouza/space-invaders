@@ -10,7 +10,7 @@ void initEnemyFormation(EnemyFormation *formation) {
     formation->speedY = 1;
     formation->direction = 1;
 
-    // Inicializa todos os inimigos como "vivos"
+    
     for (int row = 0; row < ENEMY_ROWS; row++) {
         for (int col = 0; col < ENEMY_COLS; col++) {
             formation->alive[row][col] = 1;
@@ -32,7 +32,7 @@ void drawEnemyFormation(const EnemyFormation *formation) {
         for (int col = 0; col < ENEMY_COLS; col++) {
             if (formation->alive[row][col]) {
                 screenGotoxy(formation->x + col, formation->y + row);
-                printf("\033[31mM\033[0m"); // M vermelho para os inimigos
+                printf("\033[31mM\033[0m"); 
             }
         }
     }

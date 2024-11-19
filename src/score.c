@@ -12,11 +12,11 @@ void saveScoreToFile(const char *name, double elapsedTime) {
         return;
     }
 
-    // Escreve a nova pontuação no arquivo
+   
     fprintf(file, "%s %.2f\n", name, elapsedTime);
     fclose(file);
 
-    // Agora ordena o arquivo do menor tempo para o maior
+    
     sortScores();
 }
 
@@ -30,7 +30,7 @@ void sortScores() {
     int count = 0;
     int capacity = 0;
 
-    // Lê as pontuações do arquivo
+    
     FILE *file = fopen("score.txt", "r");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo para leitura");
@@ -43,7 +43,6 @@ void sortScores() {
             break;
         }
 
-        // Realoca o array se necessário
         if (count >= capacity) {
             capacity = (capacity == 0) ? 10 : capacity * 2;
             ScoreEntry *newEntries = realloc(entries, capacity * sizeof(ScoreEntry));
@@ -60,7 +59,6 @@ void sortScores() {
     }
     fclose(file);
 
-    // Ordena as entradas do menor tempo para o maior
     for (int i = 0; i < count - 1; i++) {
         for (int j = i + 1; j < count; j++) {
             if (entries[i].time > entries[j].time) {
@@ -71,7 +69,6 @@ void sortScores() {
         }
     }
 
-    // Escreve as pontuações ordenadas de volta no arquivo
     file = fopen("score.txt", "w");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo para escrita");
@@ -84,14 +81,12 @@ void sortScores() {
     }
     fclose(file);
 
-    // Libera a memória alocada
     free(entries);
 }
 
 void getTopScores(char names[][30], double times[], int count) {
     FILE *file = fopen("score.txt", "r");
     if (file == NULL) {
-        // Preenche com valores padrão se o arquivo não existir
         for (int i = 0; i < count; i++) {
             strcpy(names[i], "---");
             times[i] = 0.0;
@@ -107,7 +102,6 @@ void getTopScores(char names[][30], double times[], int count) {
         i++;
     }
 
-    // Se houver menos entradas do que o solicitado, preenche o restante com valores padrão
     for (; i < count; i++) {
         strcpy(names[i], "---");
         times[i] = 0.0;

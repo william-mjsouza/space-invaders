@@ -16,7 +16,7 @@ void screenClear() {
 }
 
 void screenDrawBorders() {
-    printf("\033[35m"); // Código ANSI para roxo
+    printf("\033[35m");
     for (int x = 0; x <= MAXX; x++) {
         screenGotoxy(x, 0);
         printf("═");
@@ -37,7 +37,7 @@ void screenDrawBorders() {
     printf("╚");
     screenGotoxy(MAXX, MAXY);
     printf("╝");
-    printf("\033[0m"); // Restaura cor padrão
+    printf("\033[0m");
 }
 
 void screenGotoxy(int x, int y) {
