@@ -18,8 +18,8 @@ Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as
 4. **Sobreviva**: Desvie dos ataques inimigos e tente derrotar o maior número possível de naves antes que elas alcancem a base!
 
 ### Controles (a definir)
-- `A` ou `←`: Mover para a esquerda
-- `D` ou `→`: Mover para a direita
+- `A`: Mover para a esquerda
+- `D`: Mover para a direita
 - `Espaço`: Atirar
 
 ## 📋 Instruções de Clonagem, Compilação e Uso
@@ -52,6 +52,7 @@ cd space-invaders
 Para compilar e executar o jogo, simplesmente execute o seguinte comando no terminal do seu projeto:
 
 ```bash
+mkdir build
 make run
 ```
 
