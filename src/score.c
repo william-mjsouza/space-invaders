@@ -20,8 +20,7 @@ void drawScore() {
     printf("Score: %d", score);
 }
 
-// Removed showFinalScore() as we're using elapsed time now
-
+// Função para salvar a pontuação no arquivo
 void saveScoreToFile(const char *name, double elapsedTime) {
     FILE *file = fopen("score.txt", "a+");
     if (file == NULL) {
@@ -29,24 +28,25 @@ void saveScoreToFile(const char *name, double elapsedTime) {
         return;
     }
 
-    // Write the new score to the file
+    // Escreve a nova pontuação no arquivo
     fprintf(file, "%s %.2f\n", name, elapsedTime);
     fclose(file);
 
-    // Now sort the file from highest time to lowest
+    // Agora ordena o arquivo do menor tempo para o maior
     sortScores();
 }
 
+// Função para ordenar as pontuações
 void sortScores() {
     typedef struct {
         char name[30];
         double time;
     } ScoreEntry;
 
-    ScoreEntry entries[100]; // Adjust size as needed
+    ScoreEntry entries[100]; // Ajuste o tamanho conforme necessário
     int count = 0;
 
-    // Read scores from file
+    // Lê as pontuações do arquivo
     FILE *file = fopen("score.txt", "r");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo para leitura");
@@ -55,14 +55,14 @@ void sortScores() {
 
     while (fscanf(file, "%29s %lf", entries[count].name, &entries[count].time) == 2) {
         count++;
-        if (count >= 100) break; // Prevent overflow
+        if (count >= 100) break; // Evita overflow
     }
     fclose(file);
 
-    // Sort the entries from highest time to lowest
+    // Ordena as entradas do menor tempo para o maior
     for (int i = 0; i < count - 1; i++) {
         for (int j = i + 1; j < count; j++) {
-            if (entries[i].time < entries[j].time) {
+            if (entries[i].time > entries[j].time) {
                 ScoreEntry temp = entries[i];
                 entries[i] = entries[j];
                 entries[j] = temp;
@@ -70,7 +70,7 @@ void sortScores() {
         }
     }
 
-    // Write sorted scores back to file
+    // Escreve as pontuações ordenadas de volta no arquivo
     file = fopen("score.txt", "w");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo para escrita");
