@@ -9,7 +9,7 @@ Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as
 1. **Inicie o jogo**: Execute o programa compilado.
 2. **Controle sua nave**: Use as teclas de movimento para mover sua nave para a esquerda e direita.
 3. **Atire nos inimigos**: Pressione a tecla designada para disparar projéteis (representados pelo caractere '^') em direção às naves inimigas.
-4. **Sobreviva**: Desvie dos ataques inimigos e tente derrotar o maior número possível de naves antes que elas alcancem a base!
+4. **Sobreviva**: Tente derrotar o todas as naves inimigas antes que elas alcancem a base!
 
 ### Controles
 - `A`: Mover para a esquerda
