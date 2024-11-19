@@ -2,11 +2,10 @@
 #ifndef SCORE_H
 #define SCORE_H
 
-void initScore();
-void updateScore(int points);
-void drawScore();
-// Removed showFinalScore() declaration
 void saveScoreToFile(const char *name, double elapsedTime);
 void sortScores();
+
+// Função para obter os top scores
+void getTopScores(char names[][30], double times[], int count);
 
 #endif

@@ -30,7 +30,7 @@ int main() {
         Bullet bullets[MAX_BULLETS];
         initBullets(bullets, MAX_BULLETS);
 
-        initScore();
+        
 
         // Start timing the game
         startTime = clock();
@@ -62,6 +62,8 @@ int main() {
                 for (int i = 0; i < MAX_BULLETS; i++) {
                     if (bullets[i].active && checkCollision(&bullets[i], &formation)) {
                         bullets[i].active = 0;
+                        // Removemos a atualização do score
+                        // updateScore(10);
                     }
                 }
 
@@ -106,13 +108,9 @@ int main() {
 
                     keyboardDestroy(); // Restore terminal settings for user input
 
-                    // Display final score
+                    // Salva a pontuação antes de exibir os top scores
                     screenClear();
-                    screenGotoxy(MAXX / 2 - 10, MAXY / 2 - 2);
-                    printf("Parabéns! Você venceu!");
                     screenGotoxy(MAXX / 2 - 10, MAXY / 2);
-                    printf("Seu tempo: %.2f segundos", elapsedTime);
-                    screenGotoxy(MAXX / 2 - 10, MAXY / 2 + 2);
                     printf("Digite seu nome: ");
 
                     char name[30];
@@ -126,12 +124,34 @@ int main() {
                     // Save the score
                     saveScoreToFile(name, elapsedTime);
 
-                    // Ask if the player wants to play again
+                    // Obter os top 3 scores
+                    char topNames[3][30];
+                    double topTimes[3];
+                    getTopScores(topNames, topTimes, 3);
+
+                    // Display final score with top scores
+                    screenClear();
+
+                    // Exibir os top 3 scores
+                    screenGotoxy(MAXX / 2 - 15, 2);
+                    printf("=== Top 3 Jogadores ===");
+                    for (int i = 0; i < 3; i++) {
+                        screenGotoxy(MAXX / 2 - 15, 4 + i);
+                        printf("%d. %s - %.2f segundos", i + 1, topNames[i], topTimes[i]);
+                    }
+
+                    // Mensagem de vitória
+                    screenGotoxy(MAXX / 2 - 10, MAXY / 2 - 2);
+                    printf("Parabéns! Você venceu!");
+                    screenGotoxy(MAXX / 2 - 10, MAXY / 2);
+                    printf("Seu tempo: %.2f segundos", elapsedTime);
+
+                    // Perguntar se o jogador quer jogar novamente
                     char choice;
-                    screenGotoxy(MAXX / 2 - 10, MAXY / 2 + 4);
+                    screenGotoxy(MAXX / 2 - 10, MAXY / 2 + 2);
                     printf("Deseja jogar novamente? (S/N): ");
                     scanf(" %c", &choice);
-                    // Clear input buffer
+                    // Limpar o buffer de entrada
                     int c;
                     while ((c = getchar()) != '\n' && c != EOF);
 
@@ -147,6 +167,8 @@ int main() {
                 }
 
                 drawGame(&player, &formation, bullets);
+                // Removemos a chamada para desenhar o score
+                // drawScore();
             }
         }
 
