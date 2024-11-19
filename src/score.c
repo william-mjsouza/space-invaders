@@ -5,9 +5,6 @@
 #include "score.h"
 #include "screen.h"
 
-// Removemos a variável 'score' e funções relacionadas
-
-// Função para salvar a pontuação no arquivo
 void saveScoreToFile(const char *name, double elapsedTime) {
     FILE *file = fopen("score.txt", "a+");
     if (file == NULL) {
@@ -23,15 +20,15 @@ void saveScoreToFile(const char *name, double elapsedTime) {
     sortScores();
 }
 
-// Função para ordenar as pontuações
 void sortScores() {
     typedef struct {
         char name[30];
         double time;
     } ScoreEntry;
 
-    ScoreEntry entries[100]; // Ajuste o tamanho conforme necessário
+    ScoreEntry *entries = NULL;
     int count = 0;
+    int capacity = 0;
 
     // Lê as pontuações do arquivo
     FILE *file = fopen("score.txt", "r");
@@ -40,9 +37,26 @@ void sortScores() {
         return;
     }
 
-    while (fscanf(file, "%29s %lf", entries[count].name, &entries[count].time) == 2) {
-        count++;
-        if (count >= 100) break; // Evita overflow
+    while (1) {
+        ScoreEntry tempEntry;
+        if (fscanf(file, "%29s %lf", tempEntry.name, &tempEntry.time) != 2) {
+            break;
+        }
+
+        // Realoca o array se necessário
+        if (count >= capacity) {
+            capacity = (capacity == 0) ? 10 : capacity * 2;
+            ScoreEntry *newEntries = realloc(entries, capacity * sizeof(ScoreEntry));
+            if (newEntries == NULL) {
+                perror("Erro ao alocar memória");
+                free(entries);
+                fclose(file);
+                return;
+            }
+            entries = newEntries;
+        }
+
+        entries[count++] = tempEntry;
     }
     fclose(file);
 
@@ -61,6 +75,7 @@ void sortScores() {
     file = fopen("score.txt", "w");
     if (file == NULL) {
         perror("Erro ao abrir o arquivo para escrita");
+        free(entries);
         return;
     }
 
@@ -68,21 +83,14 @@ void sortScores() {
         fprintf(file, "%s %.2f\n", entries[i].name, entries[i].time);
     }
     fclose(file);
+
+    // Libera a memória alocada
+    free(entries);
 }
 
-// Função para obter os top scores
 void getTopScores(char names[][30], double times[], int count) {
-    typedef struct {
-        char name[30];
-        double time;
-    } ScoreEntry;
-
-    ScoreEntry entries[100]; // Ajuste o tamanho conforme necessário
-    int totalEntries = 0;
-
     FILE *file = fopen("score.txt", "r");
     if (file == NULL) {
-        perror("Erro ao abrir o arquivo para leitura");
         // Preenche com valores padrão se o arquivo não existir
         for (int i = 0; i < count; i++) {
             strcpy(names[i], "---");
@@ -91,21 +99,19 @@ void getTopScores(char names[][30], double times[], int count) {
         return;
     }
 
-    while (fscanf(file, "%29s %lf", entries[totalEntries].name, &entries[totalEntries].time) == 2) {
-        totalEntries++;
-        if (totalEntries >= 100) break; // Evita overflow
-    }
-    fclose(file);
-
-    // Copia os top 'count' scores para os arrays de saída
-    for (int i = 0; i < count && i < totalEntries; i++) {
-        strcpy(names[i], entries[i].name);
-        times[i] = entries[i].time;
+    int i = 0;
+    while (i < count) {
+        if (fscanf(file, "%29s %lf", names[i], &times[i]) != 2) {
+            break;
+        }
+        i++;
     }
 
     // Se houver menos entradas do que o solicitado, preenche o restante com valores padrão
-    for (int i = totalEntries; i < count; i++) {
+    for (; i < count; i++) {
         strcpy(names[i], "---");
         times[i] = 0.0;
     }
+
+    fclose(file);
 }
