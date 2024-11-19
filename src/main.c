@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>       // Added for timing functions
+#include <time.h>
 #include "screen.h"
 #include "keyboard.h"
 #include "timer.h"
@@ -70,10 +70,31 @@ int main() {
                     endTime = clock();
                     elapsedTime = ((double)(endTime - startTime)) / CLOCKS_PER_SEC;
 
-                    screenClear();
-                    screenGotoxy(MAXX / 2 - 5, MAXY / 2);
-                    printf("GAME OVER");
+                    keyboardDestroy(); // Restore terminal settings for user input
 
+                    // Display Game Over and time
+                    screenClear();
+                    screenGotoxy(MAXX / 2 - 10, MAXY / 2 - 2);
+                    printf("GAME OVER");
+                    screenGotoxy(MAXX / 2 - 10, MAXY / 2);
+                    printf("Seu tempo: %.2f segundos", elapsedTime);
+
+                    // Ask if the player wants to play again
+                    char choice;
+                    screenGotoxy(MAXX / 2 - 10, MAXY / 2 + 2);
+                    printf("Deseja jogar novamente? (S/N): ");
+                    scanf(" %c", &choice);
+                    // Clear input buffer
+                    int c;
+                    while ((c = getchar()) != '\n' && c != EOF);
+
+                    if (choice == 'S' || choice == 's') {
+                        playAgain = 1;
+                    } else {
+                        playAgain = 0;
+                    }
+
+                    keyboardInit(); // Re-initialize keyboard for game input
                     gameEnded = 1;
                     break;
                 }
