@@ -2,14 +2,9 @@
 
 **Tavola Space** é uma recriação do clássico jogo arcade Space Invaders onde o jogador controla uma nave e deve defender a Terra de uma invasão alienígena, tudo em uma interface de texto com arte ASCII. Esta abordagem proporciona uma experiência nostálgica e diferenciada para os fãs de jogos retro.
 
-Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as naves inimigas também são representadas por caracteres 'M'. Prepare-se para desviar de ataques e eliminar os invasores!
+Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as naves inimigas também são representadas por caracteres 'M'. Prepare-se para eliminar os invasores!
 
-## 📁 Estrutura do Projeto
-
-- **src/**: Código fonte dividido em módulos.
-- **include/**: Arquivos de cabeçalho.
-
-## 🎮 Como Jogar
+# 🎮 Como Jogar
 
 1. **Inicie o jogo**: Execute o programa compilado.
 2. **Controle sua nave**: Use as teclas de movimento para mover sua nave para a esquerda e direita.
