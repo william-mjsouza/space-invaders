@@ -7,7 +7,6 @@ Neste jogo, você controla uma nave representada pelo caractere 'M', enquanto as
 ## 📁 Estrutura do Projeto
 
 - **src/**: Código fonte dividido em módulos.
-- **assets/**: Armazenamento de pontuações e recursos futuros.
 - **include/**: Arquivos de cabeçalho.
 
 ## 🎮 Como Jogar
